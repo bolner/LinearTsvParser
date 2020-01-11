@@ -19,12 +19,34 @@ using System.Text;
 using System.Collections.Generic;
 
 namespace LinearTsvParser {
+    /// <summary>
+    /// Read TSV from an input stream
+    /// </summary>
     public class TsvReader : IDisposable {
+        /// <summary>
+        /// The TSV lines will be read from here
+        /// </summary>
         private Stream inputStream;
+
+        /// <summary>
+        /// Helper object for reading from the stream
+        /// </summary>
         private StreamReader streamReader;
+
+        /// <summary>
+        /// This contains the number of lines read
+        /// </summary>
         private Int64 linesRead = 0;
+
+        /// <summary>
+        /// This helps decoding the special characters in the fields
+        /// </summary>
         private StringBuilder fieldBuffer = new StringBuilder();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="inputStream">The TSV file will be read from this stream</param>
         public TsvReader(Stream inputStream) {
             this.inputStream = inputStream;
             this.streamReader = new StreamReader(inputStream, Encoding.UTF8);
@@ -57,6 +79,9 @@ namespace LinearTsvParser {
             }
         }
 
+        /// <summary>
+        /// Read the fields from the next line of the TSV file
+        /// </summary>
         public List<string> ReadLine() {
             if (streamReader.EndOfStream) {
                 return null;
@@ -95,9 +120,7 @@ namespace LinearTsvParser {
                 }
             }
 
-            if (fieldBuffer.Length > 0) {
-                fields.Add(fieldBuffer.ToString());
-            }
+            fields.Add(fieldBuffer.ToString());
 
             return fields;
         }

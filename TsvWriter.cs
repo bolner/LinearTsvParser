@@ -103,5 +103,12 @@ namespace LinearTsvParser {
             this.streamWriter.Write(lineBuffer);
             linesWritten++;
         }
+
+        /// <summary>
+        /// Flushes the underlying StreamWriter object
+        /// </summary>
+        public void Flush() {
+            this.streamWriter.Flush();
+        }
     }
 }
