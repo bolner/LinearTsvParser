@@ -21,7 +21,7 @@ using LinearTsvParser;
 
 public class Example {
     public void ReadTsv() {
-        using (var input = File.OpenRead("/tmp/test.tsv"))
+        using (var input = File.OpenRead("/tmp/test.tsv.gz"))
         using (var gzip = new GZipStream(input, CompressionMode.Decompress))
         using (var tsvReader = new TsvReader(input)) {
             while(!tsvReader.EndOfStream) {
@@ -42,7 +42,7 @@ using LinearTsvParser;
 
 public class Example {
     public void WriteTsv() {
-        using (var outfile = File.Create("/tmp/test.tsv"))
+        using (var outfile = File.Create("/tmp/test.tsv.gz"))
         using (var gzip = new GZipStream(outfile, CompressionMode.Compress))
         using (var tsvWriter = new TsvWriter(gzip)) {
             foreach(List<string> fields in data) {

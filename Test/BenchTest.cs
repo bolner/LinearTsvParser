@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.IO.Compression;
 using LinearTsvParser;
 using System.Linq;
 using System.Collections.Generic;
@@ -120,9 +119,6 @@ namespace BenchmarkTests {
         public static void Main(string[] args)
         {
             BenchmarkRunner.Run<TsvBenchmarkTest>();
-
-            //var t = new TsvBenchmarkTest();
-            //t.NativeReadTest();
         }
     }
 }
