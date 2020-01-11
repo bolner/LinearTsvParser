@@ -7,7 +7,7 @@ Available at: https://www.nuget.org/packages/LinearTsvParser
 
 To include it in a `.NET Core` project:
 
-    dotnet add package LinearTsvParser --version 1.0.0
+    dotnet add package LinearTsvParser
 
 # Examples
 
