@@ -43,11 +43,13 @@ using System.Collections.Generic;
 using LinearTsvParser;
 
 public class Example {
-    public void WriteTsv() {
+    public void WriteTsv(List<string[]> data) {
         using (var outfile = File.Create("/tmp/test.tsv.gz"))
         using (var gzip = new GZipStream(outfile, CompressionMode.Compress))
         using (var tsvWriter = new TsvWriter(gzip)) {
-            foreach(List<string> fields in data) {
+            tsvWriter.WriteLine(new List<string>{ "One", "Two\tTwo", "Three" });
+
+            foreach(string[] fields in data) {
                 tsvWriter.WriteLine(fields);
             }
         }
@@ -55,17 +57,20 @@ public class Example {
 }
 ```
 
+The writer accepts any `enumerable` of strings, let it be `string[]` or `List<string>`.
+
 # The `Linear TSV` format
 
 - Fields are separated by TAB characters
 - Text encoding is `UTF-8`
 - The reader can parse lines with any of these three endings: `\n`, `\r\n`, `\r`
 - The writer is restricted to output only the `\n` character as EOL
-- Special characters inside the fields are replaced:
+- Special characters inside the fields are replaced (both ways):
   - Newline => `"\n"`
   - Carriage return => `"\r"`
   - Tab => `"\t"`
   - `"\"` (backslash) => `"\\"`
+- The column counts are not validated, they can vary per line.
 
 # Benchmark
 
