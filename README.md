@@ -74,7 +74,7 @@ The writer accepts any `enumerable` of strings, let it be `string[]` or `List<st
 
 # Benchmark
 
-The benchmark test compares the performace of this library with "native" solutions, which use string replace operations. The solution with string replace (native) uses slightly more memory and is a bit slover than this library (lib). The benchmark test can be found here: [BenchTest.cs](Test/BenchTest.cs)
+The benchmark test compares the performace of this library with "native" solutions, which use string replace operations. The solution with string replace (native) uses slightly more memory and is a bit slover than this library (lib). The benchmark test can be found here: [BenchTest.cs](Test/Benchmark.cs)
 
 |          Method |     Mean |    Error |   StdDev | Allocated |
 |---------------- |---------:|---------:|---------:|----------:|
