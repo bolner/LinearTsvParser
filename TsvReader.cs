@@ -24,7 +24,7 @@ namespace LinearTsvParser {
     /// </summary>
     public class TsvReader : IDisposable {
         /// <summary>
-        /// The TSV lines will be read from here
+        /// The TSV lines are read from this stream
         /// </summary>
         private Stream inputStream;
 
@@ -34,12 +34,12 @@ namespace LinearTsvParser {
         private StreamReader streamReader;
 
         /// <summary>
-        /// This contains the number of lines read
+        /// Contains the number of lines read
         /// </summary>
         private Int64 linesRead = 0;
 
         /// <summary>
-        /// This helps decoding the special characters in the fields
+        /// Helps decoding the special characters in the fields
         /// </summary>
         private StringBuilder fieldBuffer = new StringBuilder();
 
@@ -54,7 +54,7 @@ namespace LinearTsvParser {
 
         /// <summary>
         /// For the IDisposable interface.
-        /// Gets rid of the 'StreamWriter' it created.
+        /// Gets rid of the 'StreamReader' it created.
         /// </summary>
         public void Dispose() {
             this.streamReader.Dispose();

@@ -24,7 +24,7 @@ namespace LinearTsvParser {
     /// </summary>
     public class TsvWriter : IDisposable {
         /// <summary>
-        /// The TSV lines will be written here
+        /// The TSV lines are written into this stream
         /// </summary>
         private Stream outputStream;
 
@@ -34,7 +34,7 @@ namespace LinearTsvParser {
         private StreamWriter streamWriter;
 
         /// <summary>
-        /// This contains the number of lines written
+        /// Contains the number of lines written
         /// </summary>
         private Int64 linesWritten = 0;
 
@@ -46,7 +46,7 @@ namespace LinearTsvParser {
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="outputStream">The TSV file will be written into this stream</param>
+        /// <param name="outputStream">The TSV file is written into this stream</param>
         public TsvWriter(Stream outputStream) {
             this.outputStream = outputStream;
             this.streamWriter = new StreamWriter(outputStream);
