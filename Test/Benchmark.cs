@@ -3,12 +3,10 @@ using System.IO;
 using LinearTsvParser;
 using System.Linq;
 using System.Collections.Generic;
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Attributes;
 
-namespace BenchmarkTests {
+namespace TsvTests {
     [MemoryDiagnoser]
     public class TsvBenchmarkTest {
         [Benchmark]
@@ -102,23 +100,6 @@ namespace BenchmarkTests {
                     tmp.Add(reader.ReadLine());
                 }
             }
-        }
-    }
-
-    public class Program
-    {
-        private class Config : ManualConfig
-        {
-            public Config()
-            {
-                Add(MemoryDiagnoser.Default);
-                Add(ThreadingDiagnoser.Default);
-            }
-        }
-
-        public static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<TsvBenchmarkTest>();
         }
     }
 }

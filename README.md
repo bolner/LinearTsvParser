@@ -85,6 +85,12 @@ The benchmark test compares the performace of this library with "native" solutio
 
 # Configurations
 
+Run the unit tests: (You can also run them one-by-one from VS Code)
+```bash
+dotnet build -c Debug
+dotnet test
+```
+
 Run the benchmark:
 ```bash
 dotnet run -c Release
@@ -92,10 +98,6 @@ dotnet run -c Release
 
 Create package for NuGet:
 ```bash
+dotnet build -c Prod
 dotnet pack -c Prod
-```
-
-Build for Debug:
-```bash
-dotnet build -c Debug
 ```

@@ -96,11 +96,16 @@ namespace LinearTsvParser {
 
                 notLast = enumerator.MoveNext();
                 if (notLast) {
-                    lineBuffer.Append('\n');
+                    lineBuffer.Append('\t');
                 }
             }
+
+            lineBuffer.Append('\n');
+
+            var test = lineBuffer.ToString();
             
             this.streamWriter.Write(lineBuffer);
+
             linesWritten++;
         }
 

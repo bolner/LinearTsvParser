@@ -4,7 +4,7 @@
         <LangVersion>8</LangVersion>
 
         <PackageId>LinearTsvParser</PackageId>
-        <Version>1.0.7</Version>
+        <Version>1.1.0</Version>
         <Authors>Tamas Bolner</Authors>
         <Title>Linear TSV Parser for .NET Core (read, write)</Title>
         <Description>Linear TSV Parser for .NET Core (read, write)</Description>
@@ -14,8 +14,19 @@
         <RepositoryUrl>https://github.com/bolner/LinearTsvParser</RepositoryUrl>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release' or '$(Configuration)' == 'Debug'">
-        <OutputType>Exe</OutputType>
+    <ItemGroup>
+        <Compile Remove="Test\*.cs" Condition="'$(Configuration)' == 'Prod'" />
+        <None Include="LICENSE" Pack="true" Visible="false" PackagePath="" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.12.0" Condition="'$(Configuration)' != 'Prod'" />
+        <PackageReference Include="xunit" Version="2.4.1" Condition="'$(Configuration)' != 'Prod'" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" Condition="'$(Configuration)' == 'Debug'" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" Condition="'$(Configuration)' == 'Debug'" />
+        <Compile Remove="Test\Program.cs" Condition="'$(Configuration)' == 'Debug'" />
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <ConfigurationGroup>Release</ConfigurationGroup>
+        <DefineConstants>$(DefineConstants);BENCHMARK</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Prod'">
@@ -23,9 +34,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
-    <ItemGroup>
-        <Compile Remove="Test\BenchTest.cs" Condition=" '$(Configuration)' == 'Prod' " />
-        <None Include="LICENSE" Pack="true" Visible="false" PackagePath=""/>
-        <PackageReference Include="BenchmarkDotNet" Version="0.12.0" Condition=" '$(Configuration)' != 'Prod' " />
-    </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)' != 'Prod'">
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
 </Project>
