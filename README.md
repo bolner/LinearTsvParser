@@ -59,6 +59,22 @@ public class Example {
 
 The writer accepts any `enumerable` of strings, let it be `string[]` or `List<string>`.
 
+You can output the TSV to the standard output by using `Console.Out` in the constructor:
+
+```csharp
+using System;
+using System.IO;
+using LinearTsvParser;
+
+public class Example {
+    public void WriteTsv() {
+        using var tsvWriter = new TsvWriter(Console.Out));
+
+        tsvWriter.WriteLine(new string[] {"One", "Two", "Three"});
+    }
+}
+```
+
 # The `Linear TSV` format
 
 - Fields are separated by TAB characters

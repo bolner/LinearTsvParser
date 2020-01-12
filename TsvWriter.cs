@@ -24,15 +24,17 @@ namespace LinearTsvParser {
     /// </summary>
     public class TsvWriter : IDisposable {
         /// <summary>
-        /// This tells whether the StreamWriter was passed to the class
-        /// from the outside or it created it.
+        /// Helper object for writing into the stream.
+        /// Only needed when this class wasn't instantiated
+        /// by passing a TextWriter to the constructor.
         /// </summary>
-        private bool weOwnTheStreamWriter = false;
+        private StreamWriter streamWriter = null;
 
         /// <summary>
-        /// Helper object for writing into the stream
+        /// Generic interface for the underlying stream.
+        /// Required for supporting different kinds of output streams.
         /// </summary>
-        private StreamWriter streamWriter;
+        private TextWriter textWriter;
 
         /// <summary>
         /// Contains the number of lines written
@@ -50,15 +52,16 @@ namespace LinearTsvParser {
         /// <param name="outputStream">The TSV file is written into this stream</param>
         public TsvWriter(Stream outputStream) {
             this.streamWriter = new StreamWriter(outputStream);
-            this.weOwnTheStreamWriter = true;
+            this.textWriter = (TextWriter)this.streamWriter;
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="outputWriter">The TSV file is written into this stream</param>
-        public TsvWriter(StreamWriter outputWriter) {
-            this.streamWriter = outputWriter;
+        /// <param name="textWriter">The TSV file is written into this stream</param>
+        public TsvWriter(TextWriter textWriter) {
+            this.streamWriter = null;
+            this.textWriter = textWriter;
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace LinearTsvParser {
         /// Gets rid of the 'StreamWriter' it created.
         /// </summary>
         public void Dispose() {
-            if (this.weOwnTheStreamWriter) {
+            if (this.streamWriter != null) {
                 this.streamWriter.Dispose();
                 this.streamWriter = null;
             }
@@ -112,7 +115,7 @@ namespace LinearTsvParser {
             }
 
             lineBuffer.Append('\n');
-            this.streamWriter.Write(lineBuffer);
+            this.textWriter.Write(lineBuffer);
             linesWritten++;
         }
 
@@ -120,7 +123,7 @@ namespace LinearTsvParser {
         /// Flushes the underlying StreamWriter object
         /// </summary>
         public void Flush() {
-            this.streamWriter.Flush();
+            this.textWriter.Flush();
         }
     }
 }
