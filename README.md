@@ -34,7 +34,7 @@ public class Example {
 }
 ```
 
-Writing a `tsv.gz` file:
+Writing a `.tsv.gz` file:
 
 ```csharp
 using System.IO;
