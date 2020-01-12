@@ -23,7 +23,7 @@ public class Example {
     public void ReadTsv() {
         using (var input = File.OpenRead("/tmp/test.tsv.gz"))
         using (var gzip = new GZipStream(input, CompressionMode.Decompress))
-        using (var tsvReader = new TsvReader(input)) {
+        using (var tsvReader = new TsvReader(gzip)) {
             while(!tsvReader.EndOfStream) {
                 List<string> fields = tsvReader.ReadLine();
             }
