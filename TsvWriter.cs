@@ -101,11 +101,7 @@ namespace LinearTsvParser {
             }
 
             lineBuffer.Append('\n');
-
-            var test = lineBuffer.ToString();
-            
             this.streamWriter.Write(lineBuffer);
-
             linesWritten++;
         }
 
