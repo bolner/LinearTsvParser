@@ -14,6 +14,10 @@
         <RepositoryUrl>https://github.com/bolner/LinearTsvParser</RepositoryUrl>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' or '$(Configuration)' == 'Debug'">
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(Configuration)' == 'Prod'">
         <ConfigurationGroup>Release</ConfigurationGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

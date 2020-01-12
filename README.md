@@ -82,3 +82,20 @@ The benchmark test compares the performace of this library with "native" solutio
 |  NativeReadTest | 309.8 ms | 10.08 ms | 29.26 ms |  66.66 MB |
 |    LibWriteTest | 110.8 ms |  2.81 ms |  8.25 ms |  23.52 MB |
 | NativeWriteTest | 195.9 ms |  4.16 ms | 11.99 ms |  36.06 MB |
+
+# Configurations
+
+Run the benchmark:
+```bash
+dotnet run -c Release
+```
+
+Create package for NuGet:
+```bash
+dotnet pack -c Prod
+```
+
+Build for Debug:
+```bash
+dotnet build -c Debug
+```
