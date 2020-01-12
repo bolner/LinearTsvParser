@@ -4,7 +4,7 @@
         <LangVersion>8</LangVersion>
 
         <PackageId>LinearTsvParser</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.7</Version>
         <Authors>Tamas Bolner</Authors>
         <Title>Linear TSV Parser for .NET Core (read, write)</Title>
         <Description>Linear TSV Parser for .NET Core (read, write)</Description>
@@ -14,9 +14,14 @@
         <RepositoryUrl>https://github.com/bolner/LinearTsvParser</RepositoryUrl>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Prod'">
+        <ConfigurationGroup>Release</ConfigurationGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
+        <Compile Remove="Test\BenchTest.cs" Condition=" '$(Configuration)' == 'Prod' " />
         <None Include="LICENSE" Pack="true" Visible="false" PackagePath=""/>
-        <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
-        <Content Remove="Test\**" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.12.0" Condition=" '$(Configuration)' != 'Prod' " />
     </ItemGroup>
 </Project>
