@@ -24,9 +24,10 @@ namespace LinearTsvParser {
     /// </summary>
     public class TsvWriter : IDisposable {
         /// <summary>
-        /// The TSV lines are written into this stream
+        /// This tells whether the StreamWriter was passed to the class
+        /// from the outside or it created it.
         /// </summary>
-        private Stream outputStream;
+        private bool weOwnTheStreamWriter = false;
 
         /// <summary>
         /// Helper object for writing into the stream
@@ -48,8 +49,16 @@ namespace LinearTsvParser {
         /// </summary>
         /// <param name="outputStream">The TSV file is written into this stream</param>
         public TsvWriter(Stream outputStream) {
-            this.outputStream = outputStream;
             this.streamWriter = new StreamWriter(outputStream);
+            this.weOwnTheStreamWriter = true;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="outputWriter">The TSV file is written into this stream</param>
+        public TsvWriter(StreamWriter outputWriter) {
+            this.streamWriter = outputWriter;
         }
 
         /// <summary>
@@ -57,8 +66,10 @@ namespace LinearTsvParser {
         /// Gets rid of the 'StreamWriter' it created.
         /// </summary>
         public void Dispose() {
-            this.streamWriter.Dispose();
-            this.streamWriter = null;
+            if (this.weOwnTheStreamWriter) {
+                this.streamWriter.Dispose();
+                this.streamWriter = null;
+            }
         }
 
         /// <summary>

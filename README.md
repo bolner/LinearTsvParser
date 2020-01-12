@@ -1,7 +1,7 @@
 Linear TSV Parser
 =================
 
-Reading and writing `Linear TSV` files in a binary-safe, lossless way.
+Reading and writing `Linear TSV` files in a safe, lossless way.
 
 # NuGet package
 
