@@ -4,13 +4,13 @@
         <LangVersion>8</LangVersion>
 
         <PackageId>LinearTsvParser</PackageId>
-        <Version>1.1.4</Version>
+        <Version>1.1.5</Version>
         <Authors>Tamas Bolner</Authors>
         <Title>Linear TSV Parser for .NET Core (read, write)</Title>
         <Description>Linear TSV Parser for .NET Core (read, write)</Description>
         <Copyright>Copyright 2020 Tamas Bolner</Copyright>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageTags>dotnet-core, tsv, parser, linear-tsv, library</PackageTags>
+        <PackageTags>dotnet-core, tsv, async, parser, linear-tsv, library</PackageTags>
         <RepositoryUrl>https://github.com/bolner/LinearTsvParser</RepositoryUrl>
     </PropertyGroup>
 

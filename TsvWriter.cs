@@ -16,6 +16,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace LinearTsvParser {
@@ -40,11 +41,6 @@ namespace LinearTsvParser {
         /// Contains the number of lines written
         /// </summary>
         private Int64 linesWritten = 0;
-
-        /// <summary>
-        /// For building output lines
-        /// </summary>
-        private StringBuilder lineBuffer = new StringBuilder();
 
         /// <summary>
         /// Constructor
@@ -86,11 +82,28 @@ namespace LinearTsvParser {
 
         /// <summary>
         /// Output a line into the stream as linear TSV.
-        /// The 'fields'
         /// </summary>
         /// <param name="fields">Can be any enumarable of strings, like an array or a list for example.</param>
         public void WriteLine(IEnumerable<string> fields) {
-            lineBuffer.Clear();
+            this.textWriter.Write(BuildLine(fields));
+            linesWritten++;
+        }
+
+        /// <summary>
+        /// Output a line into the stream as linear TSV.
+        /// </summary>
+        /// <param name="fields">Can be any enumarable of strings, like an array or a list for example.</param>
+        public async Task WriteLineAsync(IEnumerable<string> fields) {
+            await this.textWriter.WriteAsync(BuildLine(fields));
+            linesWritten++;
+        }
+
+        /// <summary>
+        /// Builds a line of text in linear TSV format out of the
+        /// input values
+        /// </summary>
+        public StringBuilder BuildLine(IEnumerable<string> fields) {
+            StringBuilder lineBuffer = new StringBuilder();
             var enumerator = fields.GetEnumerator();
             bool notLast = enumerator.MoveNext();
             string field;
@@ -115,8 +128,8 @@ namespace LinearTsvParser {
             }
 
             lineBuffer.Append('\n');
-            this.textWriter.Write(lineBuffer);
-            linesWritten++;
+
+            return lineBuffer;
         }
 
         /// <summary>

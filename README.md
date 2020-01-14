@@ -1,7 +1,7 @@
 Linear TSV Parser
 =================
 
-Reading and writing `Linear TSV` files in a safe, lossless way.
+Reading and writing `Linear TSV` files in a safe, lossless way. Both async and sync I/O operations are supported.
 
 # NuGet package
 
@@ -13,28 +13,29 @@ To include it in a `.NET Core` project:
 
 # Examples
 
-Reading a `.tsv.gz` file:
+Reading a `.tsv.gz` file in async mode:
 
 ```csharp
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using LinearTsvParser;
 
 public class Example {
-    public void ReadTsv() {
+    public async Task ReadTsv() {
         using (var input = File.OpenRead("/tmp/test.tsv.gz"))
         using (var gzip = new GZipStream(input, CompressionMode.Decompress))
         using (var tsvReader = new TsvReader(gzip)) {
             while(!tsvReader.EndOfStream) {
-                List<string> fields = tsvReader.ReadLine();
+                List<string> fields = await tsvReader.ReadLineAsync();
             }
         }
     }
 }
 ```
 
-Writing a `.tsv.gz` file:
+Writing a `.tsv.gz` file in sync mode:
 
 ```csharp
 using System.IO;
@@ -90,7 +91,7 @@ public class Example {
 
 # Benchmark
 
-The benchmark test compares the performace of this library with "native" solutions, which use string replace operations. The solution with string replace (native) uses slightly more memory and is a bit slover than this library (lib). The benchmark test can be found here: [BenchTest.cs](Test/Benchmark.cs)
+The benchmark test compares the performace of this library with "native" solutions, which use string replace operations. The solution with string replace (native) uses more memory and is slower than this library (lib). The benchmark test can be found here: [Benchmark.cs](Test/Benchmark.cs)
 
 |          Method |     Mean |    Error |   StdDev | Allocated |
 |---------------- |---------:|---------:|---------:|----------:|

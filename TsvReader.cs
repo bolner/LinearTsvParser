@@ -16,6 +16,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace LinearTsvParser {
@@ -90,6 +91,27 @@ namespace LinearTsvParser {
             linesRead++;
             string line = streamReader.ReadLine();
 
+            return ParseLine(line);
+        }
+
+        /// <summary>
+        /// Read the fields from the next line of the TSV file
+        /// </summary>
+        public async Task<List<string>> ReadLineAsync() {
+            if (streamReader.EndOfStream) {
+                return null;
+            }
+
+            linesRead++;
+            string line = await streamReader.ReadLineAsync();
+
+            return ParseLine(line);
+        }
+
+        /// <summary>
+        /// Parses a single line of TSV data into a list of fields
+        /// </summary>
+        public List<string> ParseLine(string line) {
             bool esc = false;
             List<string> fields = new List<string>();
             fieldBuffer.Clear();

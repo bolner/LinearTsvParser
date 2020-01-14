@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Diagnostics;
-using LinearTsvParser;
 using BenchmarkDotNet.Running;
 
 namespace TsvTests {

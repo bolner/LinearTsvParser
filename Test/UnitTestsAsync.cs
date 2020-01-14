@@ -1,24 +1,25 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using LinearTsvParser;
 using Xunit;
 
 namespace TsvTests {
-    public class UnitTests {
+    public class UnitTestsAsync {
         [Fact]
-        public static void TestRead() {
+        public static async Task TestRead() {
             using (var mem = new MemoryStream())
             using (var writer = new StreamWriter(mem))
             using (var tsv = new TsvReader(mem)) {
                 for (int i = 0; i < 10; i++) {
-                    writer.Write("a\\r\tb\\n\tc\\t\td\\\\\\n\n");
+                    await writer.WriteAsync("a\\r\tb\\n\tc\\t\td\\\\\\n\n");
                 }
 
                 writer.Flush();
                 mem.Position = 0;
 
                 for (int i = 0; i < 10; i++) {
-                    var line = tsv.ReadLine();
+                    var line = await tsv.ReadLineAsync();
 
                     Assert.Equal("a\r", line[0]);
                     Assert.Equal("b\n", line[1]);
@@ -29,12 +30,12 @@ namespace TsvTests {
         }
 
         [Fact]
-        public static void TestWrite() {
+        public static async Task TestWrite() {
             using (var mem = new MemoryStream())
             using (var reader = new StreamReader(mem))
             using (var tsv = new TsvWriter(mem)) {
                 for (int i = 0; i < 10; i++) {
-                    tsv.WriteLine(
+                    await tsv.WriteLineAsync(
                         new string[] {"a\r", "b\n", "c\t", "d\\\n"}
                     );
                 }
@@ -43,7 +44,7 @@ namespace TsvTests {
                 mem.Position = 0;
 
                 for (int i = 0; i < 10; i++) {
-                    string line = reader.ReadLine();
+                    string line = await reader.ReadLineAsync();
 
                     Assert.Equal("a\\r\tb\\n\tc\\t\td\\\\\\n", line);
                 }
