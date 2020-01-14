@@ -38,6 +38,11 @@ namespace LinearTsvParser {
         private TextWriter textWriter;
 
         /// <summary>
+        /// For building output lines
+        /// </summary>
+        private StringBuilder lineBuffer = new StringBuilder();
+
+        /// <summary>
         /// Contains the number of lines written
         /// </summary>
         private Int64 linesWritten = 0;
@@ -85,7 +90,8 @@ namespace LinearTsvParser {
         /// </summary>
         /// <param name="fields">Can be any enumarable of strings, like an array or a list for example.</param>
         public void WriteLine(IEnumerable<string> fields) {
-            this.textWriter.Write(BuildLine(fields));
+            BuildLine(fields);
+            this.textWriter.Write(lineBuffer);
             linesWritten++;
         }
 
@@ -94,16 +100,18 @@ namespace LinearTsvParser {
         /// </summary>
         /// <param name="fields">Can be any enumarable of strings, like an array or a list for example.</param>
         public async Task WriteLineAsync(IEnumerable<string> fields) {
-            await this.textWriter.WriteAsync(BuildLine(fields));
+            BuildLine(fields);
+            await this.textWriter.WriteAsync(lineBuffer);
             linesWritten++;
         }
 
         /// <summary>
         /// Builds a line of text in linear TSV format out of the
-        /// input values
+        /// input values.
+        /// Uses the private 'lineBuffer' property.
         /// </summary>
-        public StringBuilder BuildLine(IEnumerable<string> fields) {
-            StringBuilder lineBuffer = new StringBuilder();
+        private void BuildLine(IEnumerable<string> fields) {
+            lineBuffer.Clear();
             var enumerator = fields.GetEnumerator();
             bool notLast = enumerator.MoveNext();
             string field;
@@ -128,8 +136,6 @@ namespace LinearTsvParser {
             }
 
             lineBuffer.Append('\n');
-
-            return lineBuffer;
         }
 
         /// <summary>

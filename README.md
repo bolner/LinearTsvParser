@@ -95,12 +95,12 @@ public class Example {
 
 The benchmark test compares the performace of this library with "native" solutions, which use string replace operations. The solution with string replace (native) uses more memory and is slower than this library (lib). The benchmark test can be found here: [Benchmark.cs](Test/Benchmark.cs)
 
-|          Method |     Mean |    Error |   StdDev | Allocated |
-|---------------- |---------:|---------:|---------:|----------:|
-|     LibReadTest | 275.5 ms |  7.15 ms | 21.08 ms |  62.31 MB |
-|  NativeReadTest | 309.8 ms | 10.08 ms | 29.26 ms |  66.66 MB |
-|    LibWriteTest | 110.8 ms |  2.81 ms |  8.25 ms |  23.52 MB |
-| NativeWriteTest | 195.9 ms |  4.16 ms | 11.99 ms |  36.06 MB |
+|          Method |     Mean |   Error |  StdDev | Allocated |
+|---------------- |---------:|--------:|--------:|----------:|
+|     LibReadTest | 225.0 ms | 4.42 ms | 5.90 ms | 139.51 MB |
+|  NativeReadTest | 309.7 ms | 3.84 ms | 3.59 ms | 148.66 MB |
+|    LibWriteTest | 158.4 ms | 1.92 ms | 1.71 ms |   72.4 MB |
+| NativeWriteTest | 270.6 ms | 5.36 ms | 6.38 ms |  86.11 MB |
 
 # Configurations
 
