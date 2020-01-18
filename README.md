@@ -80,7 +80,7 @@ public class Example {
 
 You can ensure that the data hits the physical drive by calling `FlushAsync`.
 ```csharp
-public void WriteTsv(Stream output) {
+public async Task WriteTsv(Stream output) {
     using var tsvWriter = new TsvWriter(output);
     
     await tsvWriter.WriteLineAsync(new List<string>{ "One", "Two\tTwo", "Three" });
