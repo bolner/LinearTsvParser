@@ -26,12 +26,12 @@ using LinearTsvParser;
 
 public class Example {
     public async Task ReadTsv() {
-        using (var input = File.OpenRead("/tmp/test.tsv.gz"))
-        using (var gzip = new GZipStream(input, CompressionMode.Decompress))
-        using (var tsvReader = new TsvReader(gzip)) {
-            while(!tsvReader.EndOfStream) {
-                List<string> fields = await tsvReader.ReadLineAsync();
-            }
+        using var input = File.OpenRead("/tmp/test.tsv.gz");
+        using var gzip = new GZipStream(input, CompressionMode.Decompress);
+        using var tsvReader = new TsvReader(gzip);
+
+        while(!tsvReader.EndOfStream) {
+            List<string> fields = await tsvReader.ReadLineAsync();
         }
     }
 }
@@ -47,14 +47,14 @@ using LinearTsvParser;
 
 public class Example {
     public void WriteTsv(List<string[]> data) {
-        using (var outfile = File.Create("/tmp/test.tsv.gz"))
-        using (var gzip = new GZipStream(outfile, CompressionMode.Compress))
-        using (var tsvWriter = new TsvWriter(gzip)) {
-            tsvWriter.WriteLine(new List<string>{ "One", "Two\tTwo", "Three" });
+        using var outfile = File.Create("/tmp/test.tsv.gz");
+        using var gzip = new GZipStream(outfile, CompressionMode.Compress);
+        using var tsvWriter = new TsvWriter(gzip);
 
-            foreach(string[] fields in data) {
-                tsvWriter.WriteLine(fields);
-            }
+        tsvWriter.WriteLine(new List<string>{ "One", "Two\tTwo", "Three" });
+
+        foreach(string[] fields in data) {
+            tsvWriter.WriteLine(fields);
         }
     }
 }
@@ -75,6 +75,16 @@ public class Example {
 
         tsvWriter.WriteLine(new string[] {"One", "Two", "Three"});
     }
+}
+```
+
+You can ensure that the data hits the physical drive by calling `FlushAsync`.
+```csharp
+public void WriteTsv(Stream output) {
+    using var tsvWriter = new TsvWriter(output);
+    
+    await tsvWriter.WriteLineAsync(new List<string>{ "One", "Two\tTwo", "Three" });
+    await tsvWriter.FlushAsync();
 }
 ```
 

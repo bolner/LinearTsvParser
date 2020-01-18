@@ -144,5 +144,12 @@ namespace LinearTsvParser {
         public void Flush() {
             this.textWriter.Flush();
         }
+
+        /// <summary>
+        /// Flushes the underlying StreamWriter object
+        /// </summary>
+        public async Task FlushAsync() {
+            await this.textWriter.FlushAsync();
+        }
     }
 }
